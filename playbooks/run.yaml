@@ -9,4 +9,4 @@
       become: true
       shell: ssh -v root@147.75.50.187
       environment:
-        SSH_AUTH_SOCK: "{{ site_bastion.ssh_agent_sock }}"
+        SSH_AUTH_SOCK: "{{ site_bastion.ssh_auth_sock }}"
