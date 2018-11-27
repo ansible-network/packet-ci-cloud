@@ -8,7 +8,7 @@
 
     - name: Symlink /etc/openstack_deploy directory
       file:
-        src: "{{ zuul.project.src_dir }}/openstack_deploy"
+        src: "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}/openstack_deploy"
         dest: /etc/openstack_deploy
         state: link
 
