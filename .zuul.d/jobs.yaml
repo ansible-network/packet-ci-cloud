@@ -1,0 +1,13 @@
+- job:
+    name: packet-ci-cloud-deploy
+    pre-run: playbooks/pre.yaml
+    run: playbooks/run.yaml
+    post-run: playbooks/post.yaml
+    allowed-projects:
+      - github.com/ansible-network/packet-ci-cloud
+    required-projects:
+      - name: git.openstack.org/openstack/openstack-ansible
+        override-checkout: stable/rocky
+    secrets:
+      - site_bastion
+    nodeset: centos-7-1vcpu
