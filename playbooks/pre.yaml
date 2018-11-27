@@ -20,7 +20,7 @@
 
     - name: Start SSH Agent
       become: true
-      command: ssh-agent
+      shell: eval $(ssh-agent)
 
     - name: Create SSH private key tempfile
       become: true
