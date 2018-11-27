@@ -26,15 +26,19 @@
         dest: "{{ vault_private_key_tmp.path }}"
         mode: 0600
 
-    - name: Run setup-hosts playbook
+    - name: Run openstack-ansible playbooks
       become: true
-      shell: "/usr/local/bin/openstack-ansible setup-hosts.yml"
+      shell: "/usr/local/bin/openstack-ansible {{ items }}"
       args:
         chdir: "{{ zuul.projects['git.openstack.org/openstack/openstack-ansible'].src_dir }}/playbooks"
       environment:
         ANSIBLE_VAULT_PASSWORD_FILE: "{{ vault_private_key_tmp.path }}"
         ANSIBLE_CALLBACK_PLUGINS: /etc/ansible/roles/plugins/callback:/opt/ansible-runtime/lib/python2.7/site-packages/ara/plugins/callbacks
         SSH_AUTH_SOCK: "{{ site_bastion.ssh_auth_sock }}"
+      with_items:
+        - setup-hosts.yml
+        - setup-infrastructure.yml
+        - setup-openstack.yml
 
     - name: Remove vault private key from disk
       become: true
