@@ -7,6 +7,7 @@
         bindep_dir: "{{ zuul.project.src_dir }}"
 
     - name: Symlink /etc/openstack_deploy directory
+      become: true
       file:
         src: "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}/openstack_deploy"
         dest: /etc/openstack_deploy
