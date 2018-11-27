@@ -12,4 +12,7 @@
       - ansible_vault
       - site_bastion
     timeout: 3600
-    nodeset: centos-7-1vcpu
+    nodeset:
+      nodes:
+        - name: bastion
+          label: ansible-centos-7-1vcpu
