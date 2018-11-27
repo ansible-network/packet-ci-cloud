@@ -1,5 +1,18 @@
 - hosts: all
   tasks:
+    - name: Ensure /etc/openstack_deploy directory exists
+      become: true
+      file:
+        dest: /etc/openstack_deploy
+        state: directory
+
+    - name: Symlink /etc/openstack_deploy directory
+      become: true
+      file:
+        src: "{{ ansible_user_dir }}/{{ zuul.project.src_dir }}/openstack_deploy"
+        dest: /etc/openstack_deploy
+        state: link
+
     - name: Bootstrap deployment host
       become: true
       shell: "SETUP_ARA=true scripts/bootstrap-ansible.sh"
