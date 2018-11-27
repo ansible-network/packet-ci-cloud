@@ -20,7 +20,7 @@
 
     - name: Start SSH Agent
       become: true
-      shell: eval $(ssh-agent)
+      shell: "ssh-agent -a {{ site_bastion.ssh_agent_sock }}"
 
     - name: Create SSH private key tempfile
       become: true
@@ -38,6 +38,8 @@
     - name: Add bastion ssh key
       become: true
       command: "ssh-add {{ ssh_private_key_tmp.path }}"
+      environment:
+        SSH_AUTH_SOCK: "{{ site_bastion.ssh_agent_sock }}"
 
     - name: Remove SSH private key from disk
       become: true
