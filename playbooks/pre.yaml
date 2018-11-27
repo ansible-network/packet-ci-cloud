@@ -18,6 +18,10 @@
         name: "{{ site_bastion.fqdn }}"
         key: "{{ site_bastion.ssh_known_hosts }}"
 
+    - name: Start SSH Agent
+      become: true
+      command: ssh-agent
+
     - name: Create SSH private key tempfile
       become: true
       tempfile:
