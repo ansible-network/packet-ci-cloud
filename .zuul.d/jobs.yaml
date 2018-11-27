@@ -11,4 +11,5 @@
     secrets:
       - ansible_vault
       - site_bastion
+    timeout: 3600
     nodeset: centos-7-1vcpu
