@@ -28,7 +28,7 @@
 
     - name: Run openstack-ansible playbooks
       become: true
-      shell: "/usr/local/bin/openstack-ansible {{ items }}"
+      shell: "/usr/local/bin/openstack-ansible {{ item }}"
       args:
         chdir: "{{ zuul.projects['git.openstack.org/openstack/openstack-ansible'].src_dir }}/playbooks"
       environment:
