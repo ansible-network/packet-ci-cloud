@@ -26,19 +26,35 @@
         dest: "{{ vault_private_key_tmp.path }}"
         mode: 0600
 
-    - name: Run openstack-ansible playbooks
+    - name: Run openstack-ansible setup-hosts playbook
       become: true
-      shell: "/usr/local/bin/openstack-ansible {{ item }}"
+      shell: "/usr/local/bin/openstack-ansible setup-hosts.yml"
       args:
         chdir: "{{ zuul.projects['git.openstack.org/openstack/openstack-ansible'].src_dir }}/playbooks"
       environment:
         ANSIBLE_VAULT_PASSWORD_FILE: "{{ vault_private_key_tmp.path }}"
         ANSIBLE_CALLBACK_PLUGINS: /etc/ansible/roles/plugins/callback:/opt/ansible-runtime/lib/python2.7/site-packages/ara/plugins/callbacks
         SSH_AUTH_SOCK: "{{ site_bastion.ssh_auth_sock }}"
-      with_items:
-        - setup-hosts.yml
-        - setup-infrastructure.yml
-        - setup-openstack.yml
+
+    - name: Run openstack-ansible setup-infrastructure playbook
+      become: true
+      shell: "/usr/local/bin/openstack-ansible setup-infrastructure.yml"
+      args:
+        chdir: "{{ zuul.projects['git.openstack.org/openstack/openstack-ansible'].src_dir }}/playbooks"
+      environment:
+        ANSIBLE_VAULT_PASSWORD_FILE: "{{ vault_private_key_tmp.path }}"
+        ANSIBLE_CALLBACK_PLUGINS: /etc/ansible/roles/plugins/callback:/opt/ansible-runtime/lib/python2.7/site-packages/ara/plugins/callbacks
+        SSH_AUTH_SOCK: "{{ site_bastion.ssh_auth_sock }}"
+
+    - name: Run openstack-ansible setup-openstack playbook
+      become: true
+      shell: "/usr/local/bin/openstack-ansible setup-openstack.yml"
+      args:
+        chdir: "{{ zuul.projects['git.openstack.org/openstack/openstack-ansible'].src_dir }}/playbooks"
+      environment:
+        ANSIBLE_VAULT_PASSWORD_FILE: "{{ vault_private_key_tmp.path }}"
+        ANSIBLE_CALLBACK_PLUGINS: /etc/ansible/roles/plugins/callback:/opt/ansible-runtime/lib/python2.7/site-packages/ara/plugins/callbacks
+        SSH_AUTH_SOCK: "{{ site_bastion.ssh_auth_sock }}"
 
     - name: Remove vault private key from disk
       become: true
