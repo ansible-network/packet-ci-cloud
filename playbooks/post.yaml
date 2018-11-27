@@ -6,6 +6,7 @@
         state: directory
 
     - name: Generate ARA HTML output
+      become: true
       command: "/opt/ansible-runtime/bin/ara generate html {{ ansible_user_dir }}/zuul-output/logs/logs/ara-report"
 
     # TODO: Migrate to fetch-zuul-logs when
