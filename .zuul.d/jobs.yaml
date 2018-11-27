@@ -9,5 +9,6 @@
       - name: git.openstack.org/openstack/openstack-ansible
         override-checkout: stable/rocky
     secrets:
+      - ansible_vault
       - site_bastion
     nodeset: centos-7-1vcpu
