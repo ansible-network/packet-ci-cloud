@@ -1,4 +1,4 @@
-- hosts: all
+- hosts: bastion
   tasks:
     - name: Run bindep role
       include_role:
