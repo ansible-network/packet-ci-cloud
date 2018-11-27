@@ -1,11 +1,5 @@
 - hosts: all
   tasks:
-    - name: Ensure /etc/openstack_deploy directory exists
-      become: true
-      file:
-        dest: /etc/openstack_deploy
-        state: directory
-
     - name: Symlink /etc/openstack_deploy directory
       become: true
       file:
