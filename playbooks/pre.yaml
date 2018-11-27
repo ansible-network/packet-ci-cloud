@@ -1,0 +1,40 @@
+- hosts: all
+  tasks:
+    - name: Run bindep role
+      include_role:
+        name: bindep
+      vars:
+        bindep_dir: "{{ zuul.project.src_dir }}"
+
+    - name: Setup SSH config
+      become: true
+      copy:
+        dest: /root/.ssh/config
+        src: root/.ssh/config
+
+    - name: Add bastion server to known hosts
+      become: true
+      known_hosts:
+        name: "{{ site_bastion.fqdn }}"
+        key: "{{ site_bastion.ssh_known_hosts }}"
+
+    - name: Create SSH private key tempfile
+      become: true
+      tempfile:
+        state: file
+      register: ssh_private_key_tmp
+
+    - name: Create SSH private key from secret
+      become: true
+      copy:
+        content: "{{ site_bastion.ssh_private_key }}"
+        dest: "{{ ssh_private_key_tmp.path }}"
+        mode: 0600
+
+    - name: Add bastion ssh key
+      become: true
+      command: "ssh-add {{ ssh_private_key_tmp.path }}"
+
+    - name: Remove SSH private key from disk
+      become: true
+      command: "shred {{ ssh_private_key_tmp.path }}"

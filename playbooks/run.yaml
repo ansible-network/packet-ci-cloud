@@ -1,0 +1,10 @@
+- hosts: all
+  tasks:
+    - name: bootstrap deployment host
+      become: true
+      shell: "SETUP_ARA=true scripts/bootstrap-ansible.sh"
+      args:
+        chdir: "{{ zuul.projects['git.openstack.org/openstack/openstack-ansible'].src_dir }}"
+    - name: test SSH
+      become: true
+      shell: ssh -v root@147.75.50.187
