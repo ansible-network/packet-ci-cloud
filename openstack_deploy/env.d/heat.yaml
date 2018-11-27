@@ -1,0 +1,10 @@
+---
+container_skel:
+  heat_api_container:
+    belongs_to: []
+    contains:
+      - heat_api_cfn
+      - heat_api
+      - heat_engine
+  heat_apis_container: {}
+  heat_engine_container: {}

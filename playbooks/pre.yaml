@@ -6,6 +6,12 @@
       vars:
         bindep_dir: "{{ zuul.project.src_dir }}"
 
+    - name: Symlink /etc/openstack_deploy directory
+      file:
+        src: "{{ zuul.project.src_dir }}/openstack_deploy"
+        dest: /etc/openstack_deploy
+        state: link
+
     - name: Setup SSH config
       become: true
       copy:
