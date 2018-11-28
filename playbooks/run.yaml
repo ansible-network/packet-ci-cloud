@@ -13,12 +13,6 @@
       args:
         chdir: "{{ zuul.projects['git.openstack.org/openstack/openstack-ansible'].src_dir }}"
 
-    - name: Pip install mitogen
-      become: true
-      pip:
-        name: mitogen
-        executable: /opt/ansible-runtime/bin/pip
-
     - name: Create vault private key tempfile
       become: true
       tempfile:
@@ -38,10 +32,8 @@
       args:
         chdir: "{{ zuul.projects['git.openstack.org/openstack/openstack-ansible'].src_dir }}/playbooks"
       environment:
-        ANSIBLE_CALLBACK_PLUGINS: /etc/ansible/roles/plugins/callback:/opt/ansible-runtime/lib/python2.7/site-packages/ara/plugins/callbacks
-        ANSIBLE_STRATEGY_PLUGINS: /etc/ansible/roles/plugins/strategy:/opt/ansible-runtime/lib/python2.7/site-packages/ansible_mitogen/plugins/strategy
-        ANSIBLE_STRATEGY: mitogen_linear
         ANSIBLE_VAULT_PASSWORD_FILE: "{{ vault_private_key_tmp.path }}"
+        ANSIBLE_CALLBACK_PLUGINS: /etc/ansible/roles/plugins/callback:/opt/ansible-runtime/lib/python2.7/site-packages/ara/plugins/callbacks
         SSH_AUTH_SOCK: "{{ site_bastion.ssh_auth_sock }}"
 
     - name: Run openstack-ansible setup-infrastructure playbook
@@ -50,10 +42,8 @@
       args:
         chdir: "{{ zuul.projects['git.openstack.org/openstack/openstack-ansible'].src_dir }}/playbooks"
       environment:
-        ANSIBLE_CALLBACK_PLUGINS: /etc/ansible/roles/plugins/callback:/opt/ansible-runtime/lib/python2.7/site-packages/ara/plugins/callbacks
-        ANSIBLE_STRATEGY_PLUGINS: /etc/ansible/roles/plugins/strategy:/opt/ansible-runtime/lib/python2.7/site-packages/ansible_mitogen/plugins/strategy
-        ANSIBLE_STRATEGY: mitogen_linear
         ANSIBLE_VAULT_PASSWORD_FILE: "{{ vault_private_key_tmp.path }}"
+        ANSIBLE_CALLBACK_PLUGINS: /etc/ansible/roles/plugins/callback:/opt/ansible-runtime/lib/python2.7/site-packages/ara/plugins/callbacks
         SSH_AUTH_SOCK: "{{ site_bastion.ssh_auth_sock }}"
 
     - name: Run openstack-ansible setup-openstack playbook
@@ -62,10 +52,8 @@
       args:
         chdir: "{{ zuul.projects['git.openstack.org/openstack/openstack-ansible'].src_dir }}/playbooks"
       environment:
-        ANSIBLE_CALLBACK_PLUGINS: /etc/ansible/roles/plugins/callback:/opt/ansible-runtime/lib/python2.7/site-packages/ara/plugins/callbacks
-        ANSIBLE_STRATEGY_PLUGINS: /etc/ansible/roles/plugins/strategy:/opt/ansible-runtime/lib/python2.7/site-packages/ansible_mitogen/plugins/strategy
-        ANSIBLE_STRATEGY: mitogen_linear
         ANSIBLE_VAULT_PASSWORD_FILE: "{{ vault_private_key_tmp.path }}"
+        ANSIBLE_CALLBACK_PLUGINS: /etc/ansible/roles/plugins/callback:/opt/ansible-runtime/lib/python2.7/site-packages/ara/plugins/callbacks
         SSH_AUTH_SOCK: "{{ site_bastion.ssh_auth_sock }}"
 
     - name: Remove vault private key from disk
