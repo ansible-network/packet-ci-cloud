@@ -6,3 +6,9 @@ install_method: source
 # HTTP access to br-mgmt network.
 openstack_service_setup_host: "{{ groups['utility_all'][0] }}"
 
+# Because we override openstack_service_setup_host above to the utility
+# container, we also need to ensure that shade is installed to keep ansible
+# happy.
+utility_distro_packages:
+  - git
+  - python-shade
