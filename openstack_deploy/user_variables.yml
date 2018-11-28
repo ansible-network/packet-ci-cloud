@@ -1,3 +1,8 @@
 ---
 debug: false
 install_method: source
+
+# Use the utility container for host checks as deployment host doesn't have
+# HTTP access to br-mgmt network.
+openstack_service_setup_host: "{{ groups['utility_all'][0] }}"
+
