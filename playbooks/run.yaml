@@ -34,7 +34,7 @@
 
     - name: Run openstack-ansible setup-hosts playbook
       become: true
-      shell: "/usr/local/bin/openstack-ansible setup-hosts.yml"
+      shell: "/usr/local/bin/openstack-ansible -vvv setup-hosts.yml"
       args:
         chdir: "{{ zuul.projects['git.openstack.org/openstack/openstack-ansible'].src_dir }}/playbooks"
       environment:
