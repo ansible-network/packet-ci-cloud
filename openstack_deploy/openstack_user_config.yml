@@ -62,7 +62,6 @@ haproxy_hosts: *infrastructure_hosts
 identity_hosts: *infrastructure_hosts
 image_hosts: *infrastructure_hosts
 compute-infra_hosts: *infrastructure_hosts
-orchestration_hosts: *infrastructure_hosts
 dashboard_hosts: *infrastructure_hosts
 network_hosts: *infrastructure_hosts
 
