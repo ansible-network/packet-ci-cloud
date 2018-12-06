@@ -13,10 +13,26 @@ resource "packet_device" "compute" {
   }
   user_data     = "#cloud-config\n\nssh_authorized_keys:\n  - \"${file("${var.cloud_ssh_public_key_path}")}\""
   facility      = "${var.packet_facility}"
-  project_id    = "${var.project_id}"
+  project_id    = "${var.packet_project_id}"
   billing_cycle = "hourly"
 
   public_ipv4_subnet_size  = "31"
+
+  connection {
+    private_key = "${file("${var.cloud_ssh_key_path}")}"
+  }
+
+  provisioner "file" {
+    source      = "${var.operating_system}-${var.control_type}.sh"
+    destination = "hardware-setup.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "bash hardware-setup.sh > hardware-setup.out",
+      "reboot"
+    ]
+  }
 }
 
 resource "packet_device" "control" {
@@ -33,8 +49,25 @@ resource "packet_device" "control" {
   }
   user_data     = "#cloud-config\n\nssh_authorized_keys:\n  - \"${file("${var.cloud_ssh_public_key_path}")}\""
   facility      = "${var.packet_facility}"
-  project_id    = "${var.project_id}"
+  project_id    = "${var.packet_project_id}"
   billing_cycle = "hourly"
 
-  public_ipv4_subnet_size  = "29"
+# enable if elastic IPv4 addresses are required
+#  public_ipv4_subnet_size  = "29"
+
+  connection {
+    private_key = "${file("${var.cloud_ssh_key_path}")}"
+  }
+
+  provisioner "file" {
+    source      = "${var.operating_system}-${var.control_type}.sh"
+    destination = "hardware-setup.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "bash hardware-setup.sh > hardware-setup.out",
+      "reboot"
+    ]
+  }
 }

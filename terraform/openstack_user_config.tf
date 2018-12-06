@@ -29,8 +29,8 @@ $${hostname}:
 JSON
 
   vars {
-    public_ip = "${element(packet_device.control.*.access_public_ipv4, count.index)}"
-    hostname  = "${element(packet_device.control.*.hostname, count.index)}"
+    public_ip = "${element(packet_device.compute.*.access_public_ipv4, count.index)}"
+    hostname  = "${element(packet_device.compute.*.hostname, count.index)}"
   }
 }
 
