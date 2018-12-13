@@ -13,7 +13,7 @@ resource "packet_device" "compute" {
   }
   user_data     = "#cloud-config\n\nssh_authorized_keys:\n  - \"${file("${var.cloud_ssh_public_key_path}")}\""
   facility      = "${var.packet_facility}"
-  project_id    = "${var.project_id}"
+  project_id    = "${var.packet_project_id}"
   billing_cycle = "hourly"
 
   public_ipv4_subnet_size  = "31"
@@ -33,7 +33,7 @@ resource "packet_device" "control" {
   }
   user_data     = "#cloud-config\n\nssh_authorized_keys:\n  - \"${file("${var.cloud_ssh_public_key_path}")}\""
   facility      = "${var.packet_facility}"
-  project_id    = "${var.project_id}"
+  project_id    = "${var.packet_project_id}"
   billing_cycle = "hourly"
 
   public_ipv4_subnet_size  = "29"
