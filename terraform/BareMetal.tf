@@ -17,6 +17,22 @@ resource "packet_device" "compute" {
   billing_cycle = "hourly"
 
   public_ipv4_subnet_size  = "31"
+
+  connection {
+    private_key = "${file("${var.cloud_ssh_key_path}")}"
+  }
+
+  provisioner "file" {
+    source      = "${var.operating_system}-${var.control_type}.sh"
+    destination = "hardware-setup.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "bash hardware-setup.sh > hardware-setup.out",
+      "reboot"
+    ]
+  }
 }
 
 resource "packet_device" "control" {
@@ -39,5 +55,19 @@ resource "packet_device" "control" {
 # enable if elastic IPv4 addresses are required
 #  public_ipv4_subnet_size  = "29"
 
-}
+  connection {
+    private_key = "${file("${var.cloud_ssh_key_path}")}"
+  }
 
+  provisioner "file" {
+    source      = "${var.operating_system}-${var.control_type}.sh"
+    destination = "hardware-setup.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "bash hardware-setup.sh > hardware-setup.out",
+      "reboot"
+    ]
+  }
+}
