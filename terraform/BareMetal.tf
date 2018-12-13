@@ -36,5 +36,8 @@ resource "packet_device" "control" {
   project_id    = "${var.packet_project_id}"
   billing_cycle = "hourly"
 
-  public_ipv4_subnet_size  = "29"
+# enable if elastic IPv4 addresses are required
+#  public_ipv4_subnet_size  = "29"
+
 }
+
