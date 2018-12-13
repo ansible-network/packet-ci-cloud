@@ -41,7 +41,7 @@ variable "operating_system" {
 
 variable "cloud_ssh_public_key_path" {
   description = "Path to your public SSH key path"
-  default = "~/.ssh/id_rsa.pub"
+  default = "./id_rsa.pub"
 }
 
 variable "cloud_ssh_key_path" {
