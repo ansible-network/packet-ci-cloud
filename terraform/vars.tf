@@ -1,16 +1,22 @@
 
-variable "project_id" {
+# set via environment variable TF_VAR_packet_project_id
+variable "packet_project_id" {
   description = "Packet Project ID"
 }
 
+# set via environment variable TF_VAR_packet_auth_token
+variable "packet_auth_token" {
+  description = "Packet API Token"
+}
+
 variable "packet_facility" {
-  description = "Packet facility: US East(ewr1), US West(sjc1), Tokyo (nrt1) or EU(ams1). Default: ewr1"
-  default = "ewr1"
+  description = "Packet facility. Default: dfw2"
+  default = "dfw2"
 }
 
 variable "compute_type" {
   description = "Instance type of OpenStack compute nodes"
-  default = "baremetal_2"
+  default = "c2.medium.x86"
 }
 
 variable "compute_count" {
@@ -20,7 +26,7 @@ variable "compute_count" {
 
 variable "control_type" {
   description = "Instance type of OpenStack control nodes"
-  default = "baremetal_2"
+  default = "c2.medium.x86"
 }
 
 variable "control_count" {
@@ -30,7 +36,7 @@ variable "control_count" {
 
 variable "operating_system" {
   description = "Operating System to install across nodes"
-  default = "centos_7"
+  default = "ubuntu_16_04"
 }
 
 variable "cloud_ssh_public_key_path" {
