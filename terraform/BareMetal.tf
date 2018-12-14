@@ -67,7 +67,6 @@ resource "packet_device" "control" {
   provisioner "remote-exec" {
     inline = [
       "bash hardware-setup.sh > hardware-setup.out",
-      "reboot"
     ]
   }
 }

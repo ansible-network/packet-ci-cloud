@@ -39,4 +39,5 @@ sed -i '/^    post-up route add -net 10.0.0.0\/8 gw .*/ s/$/ mtu 8990/' /etc/net
 # jumbo on the physical interfaces
 sed -i '/^    bond-master bond0/,/^$/s/^$/    mtu 8990\'$'\n/g' /etc/network/interfaces
 
-# at this point a reboot is recommended or at a minimum restarting the networking
+# network restart sometimes returns a fail exit code so return uptime exit code instead
+service networking restart && uptime
