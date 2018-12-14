@@ -27,8 +27,14 @@ resource "packet_device" "compute" {
     destination = "hardware-setup.sh"
   }
 
+  provisioner "file" {
+    source      = "${var.operating_system}.sh"
+    destination = "os-setup.sh"
+  }
+
   provisioner "remote-exec" {
     inline = [
+      "bash os-setup.sh > os-setup.out",
       "bash hardware-setup.sh > hardware-setup.out",
       "reboot"
     ]
@@ -64,9 +70,16 @@ resource "packet_device" "control" {
     destination = "hardware-setup.sh"
   }
 
+  provisioner "file" {
+    source      = "${var.operating_system}.sh"
+    destination = "os-setup.sh"
+  }
+
   provisioner "remote-exec" {
     inline = [
+      "bash os-setup.sh > os-setup.out",
       "bash hardware-setup.sh > hardware-setup.out",
+      "reboot"
     ]
   }
 }
