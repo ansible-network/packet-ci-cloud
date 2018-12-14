@@ -44,8 +44,18 @@ data "template_file" "openstack_user_config" {
     control_hostnames = "${jsonencode(join(",", packet_device.control.*.hostname))}"
     control_public_ips = "${join(",",packet_device.control.*.access_public_ipv4)}"
     compute_public_ips = "${join(",",packet_device.compute.*.access_public_ipv4)}"
-#    control_public_ips = "${jsonencode(split(",", packet_device.control.*.access_public_ipv4))}"
-#    compute_public_ips = "${jsonencode(split(",", packet_device.compute.*.access_public_ipv4))}"
+
+    container_cidr = "CONTAINER_CIDR"
+    container_gw = "CONTAINER_GW"
+
+    all_host_private_ips = "ALL_HOST_PRIVATE_IPS"
+
+
+    all_host_private_ips = "${join(",",packet_device.control.*.access_private_ipv4,
+                                       packet_device.compute.*.access_private_ipv4)}"
+
+    all_host_public_ips = "${join(",",packet_device.control.*.access_public_ipv4,
+                                      packet_device.compute.*.access_public_ipv4)}"
   }
 }
 
