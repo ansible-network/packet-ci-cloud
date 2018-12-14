@@ -40,4 +40,4 @@ sed -i '/^    post-up route add -net 10.0.0.0\/8 gw .*/ s/$/ mtu 8990/' /etc/net
 sed -i '/^    bond-master bond0/,/^$/s/^$/    mtu 8990\'$'\n/g' /etc/network/interfaces
 
 # network restart sometimes returns a fail exit code so return uptime exit code instead
-service networking restart && uptime
+service networking restart || uptime
