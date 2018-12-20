@@ -36,7 +36,7 @@ variable "control_count" {
 
 variable "operating_system" {
   description = "Operating System to install across nodes"
-  default = "ubuntu_16_04"
+  default = "ubuntu_18_04"
 }
 
 variable "cloud_ssh_public_key_path" {
