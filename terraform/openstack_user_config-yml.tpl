@@ -1,15 +1,15 @@
 ---
 cidr_networks: &cidr_networks
-  container: 172.29.236.0/22                   ## TODO
+  container: ${container_cidr}
   external: 192.169.91.96/28                   ## TODO
 
 used_ips:
-  - "10.53.2.0,10.53.2.10"                   ## TODO
-  - "192.169.91.96,192.169.91.100"                   ## TODO
+  - ${all_host_private_ips}
+  - ${all_host_public_ips}
 
 global_overrides:
   cidr_networks: *cidr_networks
-  internal_lb_vip_address: 172.29.236.2
+  internal_lb_vip_address: 172.29.236.2        ## TODO
   #
   # The below domain name must resolve to an IP address
   # in the CIDR specified in haproxy_keepalived_external_vip_cidr.
@@ -35,8 +35,8 @@ global_overrides:
         is_ssh_address: true
         static_routes:
           # Route to container networks
-          - cidr: 10.4.69.0/24                   ## TODO
-            gateway: 10.53.2.1                   ## TODO
+          - cidr: ${container_cidr}
+            gateway: ${container_gw}
     - network:
         container_bridge: "br-flat"
         container_type: "veth"
