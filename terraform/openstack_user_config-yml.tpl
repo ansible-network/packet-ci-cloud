@@ -1,22 +1,19 @@
 ---
 cidr_networks: &cidr_networks
-  container: 172.29.236.0/22
-  external: 192.169.91.96/28
+  container: ${container_gw}/${container_cidr}
 
 used_ips:
-  - "10.53.2.0,10.53.2.10"
-  - "192.169.91.96,192.169.91.100"
+  - ${all_host_private_ips}
+  - ${all_host_public_ips}
 
 global_overrides:
   cidr_networks: *cidr_networks
-  internal_lb_vip_address: 172.29.236.2
   #
   # The below domain name must resolve to an IP address
   # in the CIDR specified in haproxy_keepalived_external_vip_cidr.
   # If using different protocols (https/http) for the public/internal
   # endpoints the two addresses must be different.
   #
-  external_lb_vip_address: 147.75.50.183
   tunnel_bridge: "br-mgmt"
   management_bridge: "br-mgmt"
   provider_networks:
@@ -35,8 +32,8 @@ global_overrides:
         is_ssh_address: true
         static_routes:
           # Route to container networks
-          - cidr: 10.4.69.0/24
-            gateway: 10.53.2.1
+          - cidr: ${container_cidr}
+            gateway: ${container_gw}
     - network:
         container_bridge: "br-flat"
         container_type: "veth"
@@ -53,8 +50,7 @@ global_overrides:
 ###
 
 _infrastructure_hosts: &infrastructure_hosts
-  controller01:
-    ip: 172.29.236.2
+  ${infrastructure_hosts}
 
 shared-infra_hosts: *infrastructure_hosts
 repo-infra_hosts: *infrastructure_hosts
@@ -67,5 +63,4 @@ network_hosts: *infrastructure_hosts
 
 # nova hypervisors
 compute_hosts: &compute_hosts
-  compute01:
-    ip: 172.29.236.3
+  ${compute_hosts}
