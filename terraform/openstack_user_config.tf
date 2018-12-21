@@ -45,8 +45,12 @@ data "template_file" "openstack_user_config" {
     control_public_ips = "${join(",",packet_device.control.*.access_public_ipv4)}"
     compute_public_ips = "${join(",",packet_device.compute.*.access_public_ipv4)}"
 
-    container_cidr = "${lookup(packet_device.control.0.network[2], "cidr")}"
-    container_gw   = "${lookup(packet_device.control.0.network[2], "gateway")}"
+    control_private_ip = "${packet_device.control.0.access_private_ipv4}"
+    private_cidr = "${lookup(packet_device.control.0.network[2], "cidr")}"
+    private_gw   = "${lookup(packet_device.control.0.network[2], "gateway")}"
+
+    # subnet assigned to the controller for containers
+    container_nw   = "${packet_ip_attachment.container_ip_block.cidr_notation}"
 
     all_host_private_ips = "${join(",",packet_device.control.*.access_private_ipv4,
                                        packet_device.compute.*.access_private_ipv4)}"

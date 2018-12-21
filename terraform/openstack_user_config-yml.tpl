@@ -1,6 +1,6 @@
 ---
 cidr_networks: &cidr_networks
-  container: ${container_gw}/${container_cidr}
+  container: ${container_nw}
 
 used_ips:
   - ${all_host_private_ips}
@@ -32,8 +32,8 @@ global_overrides:
         is_ssh_address: true
         static_routes:
           # Route to container networks
-          - cidr: ${container_cidr}
-            gateway: ${container_gw}
+          - cidr: ${container_nw}
+            gateway: ${private_gw}
     - network:
         container_bridge: "br-flat"
         container_type: "veth"

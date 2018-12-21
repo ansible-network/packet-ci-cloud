@@ -82,7 +82,7 @@ resource "packet_device" "control" {
 
   # private SSH key for OSA to use
   provisioner "file" {
-    source      = "${file("${var.cloud_ssh_key_path}")}"
+    source      = "${var.cloud_ssh_key_path}"
     destination = "osa_rsa"
   }
 
