@@ -67,11 +67,3 @@ vi openstack_user_config.yml
 
 ### Run the Ansible Playbook
 
-
-
-
-
-
-
-
-
