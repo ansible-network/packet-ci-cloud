@@ -1,4 +1,0 @@
-- project:
-    post:
-      jobs:
-        - packet-ci-cloud-deploy
